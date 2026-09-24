@@ -1,0 +1,235 @@
+{
+  "info": {
+    "name": "TP1 - Music Social Network API",
+    "description": "Collection for testing all endpoints, relationships, sorting, searching, validation errors, and actuators for TP1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/users", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/users/1", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users", "1"] }
+          }
+        },
+        {
+          "name": "Search Users by Country",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/users/search?country=Argentina", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users", "search"], "query": [{ "key": "country", "value": "Argentina" }] }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"David Gilmour\",\n  \"email\": \"david@pinkfloyd.com\",\n  \"country\": \"UK\"\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/users", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Create User (Validation Error - 400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"email\": \"invalid-email\",\n  \"country\": \"\"\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/users", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Johnson Updated\",\n  \"email\": \"alice.new@example.com\",\n  \"country\": \"Argentina\"\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/users/1", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users", "1"] }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/users/3", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users", "3"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Artists",
+      "item": [
+        {
+          "name": "Get All Artists (Sorted by Listeners DESC)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/artists?sort=listeners,desc", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "artists"], "query": [{ "key": "sort", "value": "listeners,desc" }] }
+          }
+        },
+        {
+          "name": "Get Artist Songs (Relationship)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/artists/1/songs", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "artists", "1", "songs"] }
+          }
+        },
+        {
+          "name": "Create Artist",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Radiohead\",\n  \"mainGenre\": \"Alternative Rock\",\n  \"monthlyListeners\": 25000000\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/artists", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "artists"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Songs",
+      "item": [
+        {
+          "name": "Get All Songs (Sorted by Duration ASC)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/songs?sort=duration,asc", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "songs"], "query": [{ "key": "sort", "value": "duration,asc" }] }
+          }
+        },
+        {
+          "name": "Search Songs by Genre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/songs/search?genre=Indie%20Rock", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "songs", "search"], "query": [{ "key": "genre", "value": "Indie Rock" }] }
+          }
+        },
+        {
+          "name": "Create Song",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"505\",\n  \"durationSeconds\": 253,\n  \"artistId\": 1,\n  \"genre\": \"Indie Rock\"\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/songs", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "songs"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Playlists",
+      "item": [
+        {
+          "name": "Get All Playlists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/playlists", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "playlists"] }
+          }
+        },
+        {
+          "name": "Get Songs in Playlist (Relationship)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/playlists/1/songs", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "playlists", "1", "songs"] }
+          }
+        },
+        {
+          "name": "Create Playlist",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Chill Night\",\n  \"userId\": 1,\n  \"songIds\": [1, 2]\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/playlists", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "playlists"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Playbacks",
+      "item": [
+        {
+          "name": "Get All Playbacks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/api/playbacks", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "playbacks"] }
+          }
+        },
+        {
+          "name": "Record Playback",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"songId\": 2\n}"
+            },
+            "url": { "raw": "http://localhost:8080/api/playbacks", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "playbacks"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actuators",
+      "item": [
+        {
+          "name": "Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/actuator/health", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["actuator", "health"] }
+          }
+        },
+        {
+          "name": "Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/actuator/info", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["actuator", "info"] }
+          }
+        },
+        {
+          "name": "Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:8080/actuator/metrics", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["actuator", "metrics"] }
+          }
+        }
+      ]
+    }
+  ]
+}
